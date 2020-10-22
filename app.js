@@ -22,7 +22,7 @@ function app(people){
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   mainMenu(searchResults, people);
 }
-app();
+app(Bob);
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
 
@@ -53,8 +53,8 @@ function mainMenu(person, people){
     default:
     return mainMenu(person, people); // ask again
   }
+  mainMenu(person, people);
 }
-mainMenu();
 
 function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars);
@@ -72,7 +72,6 @@ function searchByName(people){
   return foundPerson;
 }
 searchByName();
-
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
@@ -80,7 +79,6 @@ function displayPeople(people){
   }).join("\n"));
 }
 displayPeople();
-
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
@@ -97,7 +95,7 @@ function promptFor(question, valid){
   } while(!response || !valid(response));
   return response;
 }
-promptFor();
+
 // helper function to pass into promptFor to validate yes/no answers
 function yesNo(input){
   return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
