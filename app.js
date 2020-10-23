@@ -40,6 +40,7 @@ function mainMenu(person, people){
   switch(displayOption){
     case "info":
     // TODO: get person's info
+    displayPerson(person);
     break;
     case "family":
     // TODO: get person's family
@@ -69,7 +70,7 @@ function searchByName(people){
     else{
       return false;
     }
-  })
+  });
   // TODO: find the person using the name they entered
   return foundPerson;
 }
@@ -86,9 +87,16 @@ function displayPerson(person){
   // height, weight, age, name, occupation, eye color.
   let personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
+  personInfo += "Gender: " + person.gender + "\n";
+  personInfo += "Date of Birth: " + person.dob + "\n";
+  personInfo += "Height: " + person.height + "\n";
+  personInfo += "Weight: " + person.weight + "\n";
+  personInfo += "Eye color: " + person.eyeColor + "\n";
+  personInfo += "Occupation: " + person.occupation + "\n";
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
+
 //displayPerson();
 // function that prompts and validates user input
 function promptFor(question, valid){
@@ -114,19 +122,19 @@ function singleCriteria(people){
   let displayCriteria = [];
   let foundCriteria = people.filter(function(people){
     if(person.gender === searchCriteria){
-        
+      displayPerson(); 
       return true;
 
     }
     else{
       return false;
     }
-  })
+  });
 
-
+}
 
 // Arrays and Iteration
 // Arrays. In javascript, you can declare an array literal
-let x=["hello", "world"];//preferred
-x.length; //returns the number of items in the array, 2
-x[0]; //return the value stored at the corresponding index //"hello"
+// let x=["hello", "world"];//preferred
+// x.length; //returns the number of items in the array, 2
+// x[0]; //return the value stored at the corresponding index //"hello"
