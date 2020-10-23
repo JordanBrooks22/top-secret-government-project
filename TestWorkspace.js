@@ -71,7 +71,7 @@ function searchByName(people){
   // TODO: find the person using the name they entered
   return foundPerson;
 }
-searchByName();
+//searchByName();
 
 // alerts a list of people
 function displayPeople(people){
@@ -79,7 +79,7 @@ function displayPeople(people){
     return person.firstName + " " + person.lastName;
   }).join("\n"));
 }
-displayPeople();
+//displayPeople();
 
 function displayPerson(person){
   // print all of the information about a person:
@@ -89,7 +89,7 @@ function displayPerson(person){
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
-displayPerson();
+//displayPerson();
 // function that prompts and validates user input
 function promptFor(question, valid){
   do{
