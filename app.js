@@ -13,6 +13,8 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
+      // need to check for single or multiple criteria here
+      searchResults = singleCriteria(people);
       break;
       default:
     app(people); // restart app
@@ -38,6 +40,7 @@ function mainMenu(person, people){
   switch(displayOption){
     case "info":
     // TODO: get person's info
+    displayPerson(person);
     break;
     case "family":
     // TODO: get person's family
@@ -67,27 +70,34 @@ function searchByName(people){
     else{
       return false;
     }
-  })
+  });
   // TODO: find the person using the name they entered
   return foundPerson;
 }
-searchByName();
+//searchByName();
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
     return person.firstName + " " + person.lastName;
   }).join("\n"));
 }
-displayPeople();
+//displayPeople();
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
   let personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
+  personInfo += "Gender: " + person.gender + "\n";
+  personInfo += "Date of Birth: " + person.dob + "\n";
+  personInfo += "Height: " + person.height + "\n";
+  personInfo += "Weight: " + person.weight + "\n";
+  personInfo += "Eye color: " + person.eyeColor + "\n";
+  personInfo += "Occupation: " + person.occupation + "\n";
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
-displayPerson();
+
+//displayPerson();
 // function that prompts and validates user input
 function promptFor(question, valid){
   do{
@@ -95,7 +105,7 @@ function promptFor(question, valid){
   } while(!response || !valid(response));
   return response;
 }
-
+promptFor();
 // helper function to pass into promptFor to validate yes/no answers
 function yesNo(input){
   return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
@@ -106,6 +116,7 @@ function chars(input){
   return true; // default validation only
 }
 
+<<<<<<< HEAD
 
  // TODO: find the person using the first name they entered
  function firstName(people){
@@ -114,10 +125,22 @@ function chars(input){
   let foundPerson = people.filter(function(person){
     if(person.firstName === firstName){
       return true;
+=======
+function singleCriteria(people){
+
+  let searchCriteria = promptFor("Are you looking for a male or female ?" , chars);
+  let displayCriteria = [];
+  let foundCriteria = people.filter(function(people){
+    if(person.gender === searchCriteria){
+      displayPerson(); 
+      return true;
+
+>>>>>>> b9185f936879e81894bd9a5c0433ce5fd562334b
     }
     else{
       return false;
     }
+<<<<<<< HEAD
   })
  
 }
@@ -266,3 +289,14 @@ function allInfo(person){
     }
   })
 }
+=======
+  });
+
+}
+
+// Arrays and Iteration
+// Arrays. In javascript, you can declare an array literal
+// let x=["hello", "world"];//preferred
+// x.length; //returns the number of items in the array, 2
+// x[0]; //return the value stored at the corresponding index //"hello"
+>>>>>>> b9185f936879e81894bd9a5c0433ce5fd562334b

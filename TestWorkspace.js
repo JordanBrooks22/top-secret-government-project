@@ -242,13 +242,18 @@ function allInfo(person){
     }
   })
 }
+<<<<<<< HEAD
+=======
+//searchByName();
+
+>>>>>>> b9185f936879e81894bd9a5c0433ce5fd562334b
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
     return person.firstName + " " + person.lastName;
   }).join("\n"));
 }
-displayPeople();
+//displayPeople();
 
 function displayPerson(person){
   // print all of the information about a person:
@@ -258,7 +263,7 @@ function displayPerson(person){
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
-displayPerson();
+//displayPerson();
 // function that prompts and validates user input
 function promptFor(question, valid){
   do{
