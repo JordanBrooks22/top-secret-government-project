@@ -40,7 +40,7 @@ function mainMenu(person, people){
   switch(displayOption){
     case "info":
     // TODO: get person's info
-    displayPerson(person);
+    
     break;
     case "family":
     // TODO: get person's family
@@ -63,7 +63,7 @@ function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars);
   let lastName = promptFor("What is the person's last name?", chars);
 
-  let foundPerson = people.filter(function(person){
+  let foundPerson = person.filter(function(person){
     if(person.firstName === firstName && person.lastName === lastName){
       return true;
     }
@@ -71,6 +71,7 @@ function searchByName(people){
       return false;
     }
   });
+  displayPerson(foundPerson);
   // TODO: find the person using the name they entered
   return foundPerson;
 }
@@ -131,8 +132,8 @@ function singleCriteria(people){
   let searchCriteria = promptFor("Are you looking for a male or female ?" , chars);
   let displayCriteria = [];
   let foundCriteria = people.filter(function(people){
-    if(person.gender === searchCriteria){
-      displayPerson(); 
+    if(people.gender === searchCriteria){
+           
       return true;
 
 >>>>>>> b9185f936879e81894bd9a5c0433ce5fd562334b
@@ -291,8 +292,16 @@ function allInfo(person){
 }
 =======
   });
-
-}
+  
+  for(let i = 0; i < foundCriteria.length; i++){
+    
+    displayPerson(foundCriteria[i]);
+  }
+  return foundCriteria;
+  
+  }
+  
+  
 
 // Arrays and Iteration
 // Arrays. In javascript, you can declare an array literal
