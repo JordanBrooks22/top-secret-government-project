@@ -83,13 +83,15 @@ function mainMenu(person, people){
   switch(displayOption){
     case "info":
     // TODO: get person's info
-    
+    // I think we use displayPerson() here to show all of the info of a person
     break;
     case "family":
     // TODO: get person's family
+    // Possibly add in a some type of function that will ONLY look at the parents/spouse info
     break;
     case "descendants":
     // TODO: get person's descendants
+    // the tricky one where we need to use recursion
     break;
     case "restart":
     app(people); // restart
