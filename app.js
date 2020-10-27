@@ -26,96 +26,13 @@ function app(people){
 }
 function searchByMultipleCriteria(people){
   //ask the user what criteria they want to search by
-<<<<<<< HEAD
+
   let searchType = promptFor("What criteria would you like to search by? 'Id', 'name', 'gender', 'dob', 'height', 'weight', 'eye color', 'occupation', 'parents' or 'current spouse'?",chars);
   // get what want searched 
   // then go to that specific function below and open it up.
-=======
-  let searchType = promptFor("What criteria would you like to search by? Do you want to search by ther person's 'id', 'weight', 'height', 'date of birth', 'gender', 'eye color', 'occupation', 'parent(s)', 'spouse', or 'descendents'?", chars);
-  // get what want searched
->>>>>>> 6a42902bf0743f73e77d21f5bf0f22bb854f9f64
-  let searchResults 
+
+  let searchResults;
   switch (searchType.toLowerCase()) {
-    case "id":
-      searchResults = searchById(people);
-      break;
-<<<<<<< HEAD
-      default:
-      break;
-  }
-  let searchResults
-  switch (searchType.toLowerCase()){
-    case "name":
-      searchResults = searchByName(people);
-      break;
-      default:
-      break;
-  }
-  let searchResults
-  switch (searchType.toLowerCase()){
-    case "gender":
-      searchResults = personGender(people);
-      break;
-      default:
-      break;
-  }
-  let searchResults
-  switch (searchType.toLowerCase()){
-    case "dob":
-      searchResults = dateOfBirth(people);
-      break;
-      default:
-      break;
-  }
-  let searchResults
-  switch (searchType.toLowerCase()){
-    case "height":
-      searchResults = personHeight(people);
-        break;
-        default:
-        break;
-  }
-  let searchResults
-  switch (searchType.toLowerCase()){
-    case "weight":
-      searchResults = personWeight(people);
-      break;
-      default:
-      break;
-  }
-  let searchResults
-  switch (searchType.toLowerCase()){
-    case "eye color":
-      searchResults = eyeColor(people);
-      break;
-      default:
-      break;
-  }
-  let searchResults
-  switch (searchType.toLowerCase()){
-    case "occupation":
-      searchResults = personOccupation(people);
-      break;
-      default:
-      break;
-  }
-  let searchResults
-  switch (searchResults.toLowerCase()){
-    case "parents":
-      searchResults = personParents(people);
-      break;
-      default:
-       break;
-  } 
-  let searchResults
-  switch (searchType.toLowerCase()){
-    case "current spouse":
-      searchResults = currentSpouse(people);
-      break;
-      default:
-      break;
-  }
-  searchByMultipleCriteria
     case "weight":
       searchResults = personWeight(people);
       break;
@@ -143,13 +60,15 @@ function searchByMultipleCriteria(people){
     case "descendents":
       searchResults = criDescendents(people);
       break;
-    case "quit":
+    case "finished":
+      return searchResults;
       break;
     default:
+      return searchByMultipleCriteria(people);
       break;
   }
-  searchByMultipleCriteria(people);
->>>>>>> 6a42902bf0743f73e77d21f5bf0f22bb854f9f64
+  return searchByMultipleCriteria(searchResults);
+
   //return results
 }
 // Menu function to call once you find who you are looking for
@@ -158,11 +77,9 @@ function mainMenu(person, people){
  /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
 
   if(!person){
-<<<<<<< HEAD
+
     alert("Could not find that individual. Would you like to return to main menu? ");
-=======
-    alert("Could not find that individual.");
->>>>>>> 6a42902bf0743f73e77d21f5bf0f22bb854f9f64
+
     return mainMenu(people); // restart
   }
 
@@ -240,10 +157,6 @@ function promptFor(question, valid){
   } while(!response || !valid(response));
   return response;
 }
-<<<<<<< HEAD
-=======
-
->>>>>>> 6a42902bf0743f73e77d21f5bf0f22bb854f9f64
 // helper function to pass into promptFor to validate yes/no answers
 function yesNo(input){
   return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
@@ -266,11 +179,8 @@ function chars(input){
     else{
       return false;
     }
-<<<<<<< HEAD
-  })
-=======
+
   });
->>>>>>> 6a42902bf0743f73e77d21f5bf0f22bb854f9f64
  
 }
 // TODO: find the prson using the last name they entered
@@ -288,23 +198,12 @@ function lastName(people){
 } 
   // TODO: find the person using their id #
  function searchById(people){
-   
-<<<<<<< HEAD
-    let iD = promptFor("What is the person's id?", chars);
-    iD = parseInt(iD);
-   
-
- 
-   let foundPerson = people.filter(function(person){
-     if(person.iD === iD){
-       return true
-=======
   let iD = promptFor("What is the person's id?", chars);
   iD = parseInt(iD);
   let foundPerson = people.filter(function(person){
     if(person.id === iD){
       return true;
->>>>>>> 6a42902bf0743f73e77d21f5bf0f22bb854f9f64
+
      }
     else{
       return false;
@@ -338,12 +237,9 @@ function dateOfBirth(people){
     else{
       return false;
     }
-<<<<<<< HEAD
-  })
-=======
   });
   displayPeople(foundPerson);
->>>>>>> 6a42902bf0743f73e77d21f5bf0f22bb854f9f64
+
 } 
   // TODO: find the person using their height
 function personHeight(people){
@@ -401,16 +297,31 @@ function personOccupation(people){
   displayPeople(foundPerson);
 }
  // TODO: find the person asking about parents
-function personParents(person){
-  let personParents = promptFor("Do they have parents?", chars);
+function personParents(person, people){
+  
   let foundPerson = people.filter(function(person){
-    if(person.parents === personParents){
+    if(person.parents[0] === person.id || person.parents[1] === person.id){ //may throw null ref exceptions
+
       return true;
     }
     else{
       return false;
     }
   });
+  return foundPerson;
+}
+function findSiblings(myPerson, people){
+
+  let foundPerson = people.filter(function(person){
+    if(person.parent[0] === myPerson.parent[0] || person.parent[0] === myPerson.parent[1] || person.parent[1] === myPerson[0] || person.parent[1] === myPerson[1]){
+
+      return true;
+    }
+    else{
+      return false;
+    }
+  });
+  return foundPerson;
 }
 // TODO: find the person asking about the spouse
 function currentSpouse(person){
@@ -447,24 +358,11 @@ function allInfo(person){
     else{
       return false;
     }
-<<<<<<< HEAD
-  })
-}
-//   });
-  
-//   for(let i = 0; i < foundCriteria.length; i++){
-    
-//     displayPerson(foundCriteria[i]);
-//   }
-//   return foundCriteria;
-  
-//   }
-=======
+
   });
 }
 
->>>>>>> 6a42902bf0743f73e77d21f5bf0f22bb854f9f64
-  
+
   
 
 
