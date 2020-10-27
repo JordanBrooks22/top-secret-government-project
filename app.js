@@ -14,7 +14,7 @@ function app(people){
     case 'no':
       // TODO: search by traits
       // need to check for single or multiple criteria here
-      searchResults = singleCriteria(people);
+      searchResults = searchByMultipleCriteria(people);
       break;
       default:
     app(people); // restart app
@@ -24,14 +24,101 @@ function app(people){
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
   mainMenu(searchResults, people);
 }
-mainMenu(people);
+function searchByMultipleCriteria(people){
+  //ask the user what criteria they want to search by
+  let searchType = promptFor("What criteria would you like to search by? 'Id', 'name', 'gender', 'dob', 'height', 'weight', 'eye color', 'occupation', 'parents' or 'current spouse'?",chars);
+  // get what want searched 
+  // then go to that specific function below and open it up.
+  let searchResults 
+  switch (searchType.toLowerCase()) {
+    case "id":
+      searchResults = searchById(people);
+      break;
+      default:
+      break;
+  }
+  let searchResults
+  switch (searchType.toLowerCase()){
+    case "name":
+      searchResults = searchByName(people);
+      break;
+      default:
+      break;
+  }
+  let searchResults
+  switch (searchType.toLowerCase()){
+    case "gender":
+      searchResults = personGender(people);
+      break;
+      default:
+      break;
+  }
+  let searchResults
+  switch (searchType.toLowerCase()){
+    case "dob":
+      searchResults = dateOfBirth(people);
+      break;
+      default:
+      break;
+  }
+  let searchResults
+  switch (searchType.toLowerCase()){
+    case "height":
+      searchResults = personHeight(people);
+        break;
+        default:
+        break;
+  }
+  let searchResults
+  switch (searchType.toLowerCase()){
+    case "weight":
+      searchResults = personWeight(people);
+      break;
+      default:
+      break;
+  }
+  let searchResults
+  switch (searchType.toLowerCase()){
+    case "eye color":
+      searchResults = eyeColor(people);
+      break;
+      default:
+      break;
+  }
+  let searchResults
+  switch (searchType.toLowerCase()){
+    case "occupation":
+      searchResults = personOccupation(people);
+      break;
+      default:
+      break;
+  }
+  let searchResults
+  switch (searchResults.toLowerCase()){
+    case "parents":
+      searchResults = personParents(people);
+      break;
+      default:
+       break;
+  } 
+  let searchResults
+  switch (searchType.toLowerCase()){
+    case "current spouse":
+      searchResults = currentSpouse(people);
+      break;
+      default:
+      break;
+  }
+  searchByMultipleCriteria
+  //return results
+}
 // Menu function to call once you find who you are looking for
 function mainMenu(person, people){
 
-  /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
+ /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
 
   if(!person){
-    alert("Could not find that individual. Would you like to search by gender?");
+    alert("Could not find that individual. Would you like to return to main menu? ");
     return mainMenu(people); // restart
   }
 
@@ -52,7 +139,8 @@ function mainMenu(person, people){
     app(people); // restart
     break;
     case "quit":
-    return; // stop execution
+      break
+   // return; // stop execution
     default:
     return mainMenu(person, people); // ask again
   }
@@ -65,7 +153,7 @@ function searchByName(people){
 
   let foundPerson = person.filter(function(person){
     if(person.firstName === firstName && person.lastName === lastName){
-      return true;
+      return true; // when I ran the test i typed in billy bob but his name was not displayed
     }
     else{
       return false;
@@ -85,7 +173,7 @@ function displayPeople(people){
 //displayPeople();
 function displayPerson(person){
   // print all of the information about a person:
-  // height, weight, age, name, occupation, eye color.
+  // name, gender, dob, height, weight, eye color and occupation
   let personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
   personInfo += "Gender: " + person.gender + "\n";
@@ -106,7 +194,6 @@ function promptFor(question, valid){
   } while(!response || !valid(response));
   return response;
 }
-promptFor();
 // helper function to pass into promptFor to validate yes/no answers
 function yesNo(input){
   return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
@@ -117,7 +204,6 @@ function chars(input){
   return true; // default validation only
 }
 
-<<<<<<< HEAD
 
  // TODO: find the person using the first name they entered
  function firstName(people){
@@ -126,22 +212,10 @@ function chars(input){
   let foundPerson = people.filter(function(person){
     if(person.firstName === firstName){
       return true;
-=======
-function singleCriteria(people){
-
-  let searchCriteria = promptFor("Are you looking for a male or female ?" , chars);
-  let displayCriteria = [];
-  let foundCriteria = people.filter(function(people){
-    if(people.gender === searchCriteria){
-           
-      return true;
-
->>>>>>> b9185f936879e81894bd9a5c0433ce5fd562334b
     }
     else{
       return false;
     }
-<<<<<<< HEAD
   })
  
 }
@@ -159,9 +233,14 @@ function lastName(people){
   
 } 
   // TODO: find the person using their id #
- function iD(people){
-   let iD = promptFor("What is the person's id?", chars);
-   foundPerson = people.filter(function(person){
+ function searchById(people){
+   
+    let iD = promptFor("What is the person's id?", chars);
+    iD = parseInt(iD);
+   
+
+ 
+   let foundPerson = people.filter(function(person){
      if(person.iD === iD){
        return true
      }
@@ -193,7 +272,7 @@ function dateOfBirth(people){
       return false;
     }
   })
-}
+} 
   // TODO: find the person using their height
 function personHeight(people){
   let personHeight = promptFor("What is the person's height?", chars);
@@ -290,22 +369,16 @@ function allInfo(person){
     }
   })
 }
-=======
-  });
+//   });
   
-  for(let i = 0; i < foundCriteria.length; i++){
+//   for(let i = 0; i < foundCriteria.length; i++){
     
-    displayPerson(foundCriteria[i]);
-  }
-  return foundCriteria;
+//     displayPerson(foundCriteria[i]);
+//   }
+//   return foundCriteria;
   
-  }
+//   }
   
   
 
-// Arrays and Iteration
-// Arrays. In javascript, you can declare an array literal
-// let x=["hello", "world"];//preferred
-// x.length; //returns the number of items in the array, 2
-// x[0]; //return the value stored at the corresponding index //"hello"
->>>>>>> b9185f936879e81894bd9a5c0433ce5fd562334b
+
