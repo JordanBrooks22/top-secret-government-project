@@ -26,7 +26,7 @@ function app(people){
 }
 function searchByMultipleCriteria(people){
   //ask the user what criteria they want to search by
-  let searchType = promptFor("What criteria would you like to search by? list criteria here", chars);
+  let searchType = promptFor("What criteria would you like to search by? Do you want to search by ther person's 'id', 'weight', 'height', 'date of birth', 'gender', 'eye color', 'occupation', 'parent(s)', 'spouse', or 'descendents'?", chars);
   // get what want searched
   let searchResults 
   switch (searchType.toLowerCase()) {
@@ -60,10 +60,12 @@ function searchByMultipleCriteria(people){
     case "descendents":
       searchResults = criDescendents(people);
       break;
+    case "quit":
+      break;
     default:
       break;
   }
-  searchByMultipleCriteria;
+  searchByMultipleCriteria(people);
   //return results
 }
 // Menu function to call once you find who you are looking for
@@ -100,7 +102,7 @@ function mainMenu(person, people){
   mainMenu(person, people);
 }
 
-function searchByName(people){
+function searchByName(person){
   let firstName = promptFor("What is the person's first name?", chars);
   let lastName = promptFor("What is the person's last name?", chars);
 
@@ -193,16 +195,13 @@ function lastName(people){
   iD = parseInt(iD);
   let foundPerson = people.filter(function(person){
     if(person.id === iD){
-        
       return true;
      }
     else{
       return false;
      }
-   });
-
-    
-    //return foundPerson;
+   }); 
+   displayPeople(foundPerson);
   }
 
  
@@ -217,9 +216,8 @@ function personGender(people){
       return false;
     }
   });
-  for(let i = 0; i < foundPerson.length; i++){
-    displayPerson(foundPerson[i]);
-  }
+  displayPeople(foundPerson);
+  
 }
   // TODO: find the person using date of birth
 function dateOfBirth(people){
@@ -232,6 +230,7 @@ function dateOfBirth(people){
       return false;
     }
   });
+  displayPeople(foundPerson);
 } 
   // TODO: find the person using their height
 function personHeight(people){
@@ -258,9 +257,7 @@ function personWeight(people){
       return false;
     }
   });
-  for(let i = 0; i < foundPerson.length; i++){
-    displayPerson(foundPerson[i]);
-  }
+  displayPeople(founderPerson);
   return;
 }
 // TODO: find the person asking for eye color
@@ -274,9 +271,7 @@ function personWeight(people){
        return false;
      }
    });
-   for(let i = 0; i < foundPerson.length; i++){
-     displayPerson(foundPerson[i]);
-   }
+   displayPeople(foundPerson);
    return;
  }
   // TODO: find the person asking occupation
@@ -290,15 +285,13 @@ function personOccupation(people){
        return false;
      }
   });
-  for(let i = 0; i < foundPerson.length; i++){
-    displayPerson(foundPerson[i]);
-  }
+  displayPeople(foundPerson);
 }
  // TODO: find the person asking about parents
 function personParents(person){
   let personParents = promptFor("Do they have parents?", chars);
   let foundPerson = people.filter(function(person){
-    if(person.personParents === personParents){
+    if(person.parents === personParents){
       return true;
     }
     else{
@@ -308,10 +301,10 @@ function personParents(person){
 }
 // TODO: find the person asking about the spouse
 function currentSpouse(person){
-  let currentSpouse = promptFor("Do they have a spouse?", chars);
-  currentSpouse = parseInt(currentSpouse);
+  let personSpouse = promptFor("Do they have a spouse?", chars);
+  personSpouse = parseInt(currentSpouse);
   let foundPerson = people.filter(function(person){
-    if(person.personSpouse === personSpouse){
+    if(person.currentSpouse === personSpouse){
       return true;
     }
     else{
@@ -334,7 +327,7 @@ function criDescendents(person){
 // TODO: find all information of a person
 function allInfo(person){
   let allInfo = promptFor("Would you like to see all their information?", chars);
- let foundPerson = people.filter(function(person){
+  let foundPerson = people.filter(function(person){
     if(person.allInfo = allInfo){
       return true;
     }
