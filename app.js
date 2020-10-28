@@ -1,9 +1,5 @@
 "use strict"
-/*
-Build all of your functions for displaying and gathering information below (GUI).
-*/
 
-// app is the function called to start the entire application
 function app(people){
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
   let searchResults;
@@ -12,16 +8,14 @@ function app(people){
       searchResults = searchByName(people);
       break;
     case 'no':
-      // TODO: search by traits
-      // need to check for single or multiple criteria here
       searchResults = searchByMultipleCriteria(people);
       break;
       default:
-    app(people); // restart app
+    app(people);
       break;
   }
   
-  // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
+
   if (searchResults.length === 1) {
     mainMenu(searchResults[0], people);
 
@@ -32,14 +26,13 @@ function app(people){
   }
 }
 function searchByMultipleCriteria(people){
-  //ask the user what criteria they want to search by
 
   let searchType = promptFor("What criteria would you like to search by? 'Id', 'name', 'gender', 'dob', 'height', 'weight', 'eye color', 'occupation', 'parents' or 'current spouse'? If done, type 'finished' to end",chars);
-  // get what want searched 
-  // then go to that specific function below and open it up.
-
   let searchResults;
   switch (searchType.toLowerCase()) {
+    case "id":
+      searchResults = searchById(people);
+      break;
     case "weight":
       searchResults = personWeight(people);
       break;
@@ -64,9 +57,6 @@ function searchByMultipleCriteria(people){
     case "spouse":
       searchResults = personSpouse(people);
       break;
-    case "descendents":
-      searchResults = criDescendents(people);
-      break;
     case "finished":
       return searchResults;
       break;
@@ -75,48 +65,36 @@ function searchByMultipleCriteria(people){
       break;
   }
   return searchByMultipleCriteria(searchResults);
-
-  //return results
 }
-// Menu function to call once you find who you are looking for
+
 function mainMenu(person, people){
 
- /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
+   if(!person){
 
-  if(!person){
+    alert("Could not find that individual. Returning to main menu.");
 
-    alert("Could not find that individual. Would you like to return to main menu? ");
-
-    return mainMenu(people); // restart
+    return mainMenu(people); 
   }
 
   let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
-    // TODO: get person's info
-    // I think we use displayPerson() here to show all of the info of a person
     displayPerson(person);
     break;
     case "family":
-    // TODO: get person's family
-    // Possibly add in a some type of function that will ONLY look at the parents/spouse info
     findFamily(person, people);
     break;
     case "descendants":
-    // TODO: get person's descendants
-    // the tricky one where we need to use recursion
-    // look up people by whether id matches a person's parents,
     findDescendents(person, people);
     break;
     case "restart":
-    app(people); // restart
+    app(people);
     break;
     case "quit":
-      break;
-   // return; // stop execution
+    break;
     default:
-    return mainMenu(person, people); // ask again
+    return mainMenu(person, people);
   }
   
 }
@@ -125,34 +103,26 @@ function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars);
   let lastName = promptFor("What is the person's last name?", chars);
 
-<<<<<<< HEAD
-  let foundPerson = person.filter(function(person){
-    if(person.firstName === firstName && person.lastName === lastName){
-      return true;
-=======
   let foundPerson = people.filter(function(person){
     if(firstName === person.firstName && lastName === person.lastName){
       return true; 
->>>>>>> 1f083b3ce9fb9e9b79cd2ea97554240b2fb1295b
     }
     else{
       return false;
     }
   });
-  // TODO: find the person using the name they entered
+  
   return foundPerson;
 }
-//searchByName();
-// alerts a list of people
+
 function displayPeople(people){
   alert(people.map(function(person){
     return person.firstName + " " + person.lastName;
   }).join("\n"));
 }
-//displayPeople();
+
 function displayPerson(person){
-  // print all of the information about a person:
-  // name, gender, dob, height, weight, eye color and occupation
+
   let personInfo = "First Name: " + person.firstName + "\n";
   personInfo += "Last Name: " + person.lastName + "\n";
   personInfo += "Gender: " + person.gender + "\n";
@@ -161,31 +131,26 @@ function displayPerson(person){
   personInfo += "Weight: " + person.weight + "\n";
   personInfo += "Eye color: " + person.eyeColor + "\n";
   personInfo += "Occupation: " + person.occupation + "\n";
-  // TODO: finish getting the rest of the information to display
+  
   alert(personInfo);
 }
 
-//displayPerson();
-// function that prompts and validates user input
 function promptFor(question, valid){
   do{
     var response = prompt(question).trim();
   } while(!response || !valid(response));
   return response;
 }
-// helper function to pass into promptFor to validate yes/no answers
+
 function yesNo(input){
   return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
 }
 
-// helper function to pass in as default prompt For validation
 function chars(input){
-  return true; // default validation only
+  return true; 
 }
 
-
- // TODO: find the person using the first name they entered
- function firstName(people){
+function firstName(people){
   let firstName = promptFor("What is the person's first name?", chars);
   let foundPerson = people.filter(function(person){
     if(person.firstName === firstName){
@@ -195,11 +160,9 @@ function chars(input){
       return false;
     }
   });
- 
 }
-// TODO: find the prson using the last name they entered
-function lastName(people){
 
+function lastName(people){
   let lastName = promptFor("What is the persons's last name?", chars);
   let foundPerson = people.filter(function(person){
     if(person.lastName === lastName){
@@ -209,10 +172,9 @@ function lastName(people){
       return false;
     }
   });
-  
 } 
-  // finds the person using their id #
- function searchById(people){
+
+function searchById(people){
   let iD = promptFor("What is the person's id?", chars);
   iD = parseInt(iD);
   let foundPerson = people.filter(function(person){
@@ -226,12 +188,8 @@ function lastName(people){
    displayPeople(foundPerson);
   }
 
- 
- // finds the person using gender
 function personGender(people){
-
   let personGender = promptFor("What is the person's gender?", chars);
-  personGender = parseInt(personGender);
   let foundPerson = people.filter(function(person){
     if(person.gender === personGender){
       return true;
@@ -241,9 +199,9 @@ function personGender(people){
     }
   });
   displayPeople(foundPerson);
-  
+
 }
-  // TODO: find the person using date of birth
+
 function dateOfBirth(people){
   let dateOfBirth = promptFor("What is the person's dob?", chars);
   let foundPerson = people.filter(function(person){
@@ -255,9 +213,8 @@ function dateOfBirth(people){
     }
   });
   displayPeople(foundPerson);
-
 } 
-  // TODO: find the person using their height
+
 function personHeight(people){
   let personHeight = promptFor("What is the person's height?", chars);
   personHeight = parseInt(personHeight);
@@ -268,9 +225,9 @@ function personHeight(people){
     else{
       return false;
     }
-  });
+    });
 }
- // TODO: find the person using their weight 
+
 function personWeight(people){
   let personWeight = promptFor("What is the person's weight?", chars);
   personWeight = parseInt(personWeight);
@@ -281,25 +238,25 @@ function personWeight(people){
     else{
       return false;
     }
-  });
-  displayPeople(founderPerson);
+    });
+  displayPeople(foundPerson);
   return;
 }
-// TODO: find the person asking for eye color
+
  function eyeColor(people){
-   let eyeColor = promptFor("What is the person's eye color?", chars);
-   let foundPerson = people.filter(function(person){
+    let eyeColor = promptFor("What is the person's eye color?", chars);
+    let foundPerson = people.filter(function(person){
      if(person.eyeColor === eyeColor){
        return true;
      }
      else{
        return false;
      }
-   });
+    });
    displayPeople(foundPerson);
    return;
  }
-  // TODO: find the person asking occupation
+
 function personOccupation(people){
   let personOccupation = promptFor("What is the person's occupation?", chars);
   let foundPerson = people.filter(function(person){
@@ -312,12 +269,11 @@ function personOccupation(people){
   });
   displayPeople(foundPerson);
 }
- // TODO: find the person asking about parents
+
 function personParents(person, people){
   
   let foundPerson = people.filter(function(person){
-    if(person.parents[0] === person.id || person.parents[1] === person.id){ //may throw null ref exceptions
-
+    if(person.parents[0] === person.id || person.parents[1] === person.id){ 
       return true;
     }
     else{
@@ -329,7 +285,7 @@ function personParents(person, people){
 function findSiblings(myPerson, people){
 
   let foundPerson = people.filter(function(person){
-    if(person.parent[0] === myPerson.parent[0] || person.parent[0] === myPerson.parent[1] || person.parent[1] === myPerson[0] || person.parent[1] === myPerson[1]){
+    if(person.parents[0] === myPerson.parents[0] || person.parents[0] === myPerson.parents[1] || person.parents[1] === myPerson.parents[0] || person.parents[1] === myPerson.parents[1]){
 
       return true;
     }
@@ -339,7 +295,7 @@ function findSiblings(myPerson, people){
   });
   return foundPerson;
 }
-// TODO: find the person asking about the spouse
+
 function currentSpouse(people){
   let personSpouse = promptFor("Do they have a spouse?", chars);
   personSpouse = parseInt(currentSpouse);
@@ -355,8 +311,7 @@ function currentSpouse(people){
 }
 
 function findSpouse(myPerson, people){
-  
-  
+    
   let foundPerson = people.filter(function(person){
     if(person.id === myPerson.currentSpouse){
       return true;
@@ -391,35 +346,10 @@ function findDescendents(myPerson, people){
   displayPeople(foundPerson);
   for(let i = 0; i < foundPerson.length; i++){
     findDescendents(foundPerson[i], people);
-
   }
+}
 
-}
-// TODO: find the descendents of whatever person
-function criDescendents(person){
-  let criDescendents = promptFor("Would you like to see thier descendents?", chars);
-  let foundPerson = people.filter(function(person){
-    if(person.criDescendents === criDescendents){
-      return true;
-    }
-    else{
-      return false;
-    }
-  });
-}
-// TODO: find all information of a person
-function allInfo(person){
-  let allInfo = promptFor("Would you like to see all their information?", chars);
-  let foundPerson = people.filter(function(person){
-    if(person.allInfo = allInfo){
-      return true;
-    }
-    else{
-      return false;
-    }
 
-  });
-}
 
 
   
