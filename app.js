@@ -22,12 +22,19 @@ function app(people){
   }
   
   // Call the mainMenu function ONLY after you find the SINGLE person you are looking for
-  mainMenu(searchResults, people);
+  if (searchResults.length === 1) {
+    mainMenu(searchResults[0], people);
+
+  } else {
+    for (let index = 0; index < searchResults.length; index++) {
+      displayPerson(searchResults[index]);
+    }
+  }
 }
 function searchByMultipleCriteria(people){
   //ask the user what criteria they want to search by
 
-  let searchType = promptFor("What criteria would you like to search by? 'Id', 'name', 'gender', 'dob', 'height', 'weight', 'eye color', 'occupation', 'parents' or 'current spouse'?",chars);
+  let searchType = promptFor("What criteria would you like to search by? 'Id', 'name', 'gender', 'dob', 'height', 'weight', 'eye color', 'occupation', 'parents' or 'current spouse'? If done, type 'finished' to end",chars);
   // get what want searched 
   // then go to that specific function below and open it up.
 
@@ -89,40 +96,43 @@ function mainMenu(person, people){
     case "info":
     // TODO: get person's info
     // I think we use displayPerson() here to show all of the info of a person
+    displayPerson(person);
     break;
     case "family":
     // TODO: get person's family
     // Possibly add in a some type of function that will ONLY look at the parents/spouse info
+    findFamily(person, people);
     break;
     case "descendants":
     // TODO: get person's descendants
     // the tricky one where we need to use recursion
+    // look up people by whether id matches a person's parents,
+    findDescendents(person, people);
     break;
     case "restart":
     app(people); // restart
     break;
     case "quit":
-      break
+      break;
    // return; // stop execution
     default:
     return mainMenu(person, people); // ask again
   }
-  mainMenu(person, people);
+  
 }
 
-function searchByName(person){
+function searchByName(people){
   let firstName = promptFor("What is the person's first name?", chars);
   let lastName = promptFor("What is the person's last name?", chars);
 
-  let foundPerson = person.filter(function(person){
-    if(person.firstName === firstName && person.lastName === lastName){
-      return true; // when I ran the test i typed in billy bob but his name was not displayed
+  let foundPerson = people.filter(function(person){
+    if(firstName === person.firstName && lastName === person.lastName){
+      return true; 
     }
     else{
       return false;
     }
   });
-  displayPerson(foundPerson);
   // TODO: find the person using the name they entered
   return foundPerson;
 }
@@ -324,7 +334,7 @@ function findSiblings(myPerson, people){
   return foundPerson;
 }
 // TODO: find the person asking about the spouse
-function currentSpouse(person){
+function currentSpouse(people){
   let personSpouse = promptFor("Do they have a spouse?", chars);
   personSpouse = parseInt(currentSpouse);
   let foundPerson = people.filter(function(person){
@@ -335,6 +345,49 @@ function currentSpouse(person){
     return false;
     }
   });
+  return foundPerson;
+}
+
+function findSpouse(myPerson, people){
+  
+  
+  let foundPerson = people.filter(function(person){
+    if(person.id === myPerson.currentSpouse){
+      return true;
+    }
+    else{
+    return false;
+    }
+  });
+  return foundPerson;
+}
+
+function findFamily(person, people){
+
+  let parents = personParents(person, people);
+  let siblings = findSiblings(person, people);
+  let spouse = findSpouse(person, people);
+  displayPeople(parents);
+  displayPeople(siblings);
+  displayPeople(spouse);
+  
+}
+
+function findDescendents(myPerson, people){
+  let foundPerson = people.filter(function(person){
+    if(person.parents[0] === myPerson.id || person.parents[1] === myPerson.id){
+      return true;
+    }
+    else {
+      return false;
+    }
+  });
+  displayPeople(foundPerson);
+  for(let i = 0; i < foundPerson.length; i++){
+    findDescendents(foundPerson[i], people);
+
+  }
+
 }
 // TODO: find the descendents of whatever person
 function criDescendents(person){
