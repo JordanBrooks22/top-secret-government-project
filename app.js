@@ -25,40 +25,40 @@ function app(people){
     }
   }
 }
-function searchByMultipleCriteria(people){
+function searchByMultipleCriteria(people){// still needs to search for person
 
-  let searchType = promptFor("What criteria would you like to search by? 'Id', 'name', 'gender', 'dob', 'height', 'weight', 'eye color', 'occupation', 'parents' or 'current spouse'? If done, type 'finished' to end",chars);
-  let searchResults;
+  let searchType = promptFor("What criteria would you like to search by? 'Id', 'name', 'gender', 'date of birth', 'height', 'weight', 'eye color', 'occupation', 'parents' or 'current spouse'? If done, type 'finished' to end",chars);
+  let SearchResults
   switch (searchType.toLowerCase()) {
     case "id":
-      searchResults = searchById(people);
+      SearchResults = searchById(people);
       break;
     case "weight":
-      searchResults = personWeight(people);
+      SearchResults = personWeight(people);
       break;
     case "height":
-      searchResults = personHeight(people);
+      SearchResults = personHeight(people);
       break;
     case "date of birth":
-      searchResults = dateOfBirth(people);
+      SearchResults = dateOfBirth(people);
       break;
     case "gender":
-      searchResults = personGender(people);
+      SearchResults = personGender(people);
       break;
     case "eye color":
-      searchResults = eyeColor(people);
+      SearchResults = eyeColor(people);
       break;
     case "occupation":
-      searchResults = personOccupation(people);
+      SearchResults = personOccupation(people);
       break;
     case "parents":
       searchResults = personParents(people);
       break;
     case "spouse":
-      searchResults = personSpouse(people);
+      SearchResults = personSpouse(people);
       break;
     case "finished":
-      return searchResults;
+      return SearchResults;
       break;
     default:
       return searchByMultipleCriteria(people);
@@ -66,7 +66,6 @@ function searchByMultipleCriteria(people){
   }
   return searchByMultipleCriteria(searchResults);
 }
-
 function mainMenu(person, people){
 
    if(!person){
@@ -331,7 +330,8 @@ function findFamily(person, people){
   displayPeople(parents);
   displayPeople(siblings);
   displayPeople(spouse);
-  
+  //if no family display ("no known family at this time") 
+  // then click ok and takes them back to searchByMultpileCriteria
 }
 
 function findDescendents(myPerson, people){
